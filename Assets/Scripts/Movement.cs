@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using TMPro;
 public class Movement : MonoBehaviour
 {
+    public TextMeshProUGUI uiText;
+
     private Rigidbody rb;
 
     public float moveDistance = 0.1f;
@@ -12,11 +15,13 @@ public class Movement : MonoBehaviour
     public GameObject LaptopCanvas;
     public GameObject Laptop2Canvas;
 
+    public bool doorUnlocked;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
-        //rb = GetComponent<Rigidbody>();
-        //rb.freezeRotation = true;
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
     }
     void Update()
     {
@@ -52,11 +57,11 @@ public class Movement : MonoBehaviour
         Vector3 cameraForward = Camera.main.transform.forward;
 
         // Calculate the new position by moving along the camera's forward vector
-        Vector3 newPosition = transform.position + cameraForward * moveDistance;
+        Vector3 newPosition = rb.position + cameraForward * moveDistance;
 
         // Set the cursor's new position
-        transform.position = newPosition;
-        //rb.MovePosition(newPosition);
+        //transform.position = newPosition;
+        rb.MovePosition(newPosition);
     }
 
     void Turn()
@@ -70,6 +75,17 @@ public class Movement : MonoBehaviour
         transform.Rotate(Vector3.left, mouseY * turnSpeed * Time.deltaTime);
 
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0f);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Exit"))
+        {
+           if(doorUnlocked==true)
+            {
+                uiText.text = "You escaped.\nCongratulations!";
+            }
+        }
     }
 
 }

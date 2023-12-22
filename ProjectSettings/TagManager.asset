@@ -7,6 +7,7 @@ TagManager:
   - Glass
   - Laptop
   - Laptop2
+  - Exit
   layers:
   - Default
   - TransparentFX

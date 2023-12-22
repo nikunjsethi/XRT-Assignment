@@ -6,6 +6,7 @@ using TMPro;
 
 public class BinaryCode : MonoBehaviour
 {
+    public Movement movement;
     public DoorScript doorScript;
     public TextMeshProUGUI originalText;
     public TextMeshProUGUI binaryText;
@@ -32,6 +33,7 @@ public class BinaryCode : MonoBehaviour
             this.gameObject.SetActive(false);
             doorScript.OpenDoor();
             uiText.text = "The main gate is open.";
+            movement.doorUnlocked = true;
         }
     }
     string StringToBinary(string text)
